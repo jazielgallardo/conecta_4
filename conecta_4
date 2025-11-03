@@ -1,0 +1,45 @@
+#include <iostream>
+#include <vector>
+
+using namespace std;
+
+// Constantes del juego
+const int FILAS = 6;
+const int COLUMNAS = 7;
+const char VACIO = '.';
+const char JUGADOR1 = 'X';
+const char JUGADOR2 = 'O';
+
+// Clase para manejar el juego Conecta 4
+class Conecta4 {
+private:
+    vector<vector<char>> tablero;
+    char jugadorActual;
+    int fichasColocadas;
+
+public:
+    // Constructor
+    Conecta4() {
+        tablero.resize(FILAS, vector<char>(COLUMNAS, VACIO));
+        jugadorActual = JUGADOR1;
+        fichasColocadas = 0;
+    }
+
+    // Métodos a implementar
+    void mostrarTablero() {
+        // TODO
+    }
+
+    bool colocarFicha(int columna) {
+        // TODO
+        return false;
+    }
+};
+
+int main() {
+    cout << "Conecta 4 - En desarrollo" << endl;
+    
+    Conecta4 juego;
+    
+    return 0;
+}
