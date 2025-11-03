@@ -18,14 +18,14 @@ private:
     int fichasColocadas;
 
 public:
-    // Constructor
+    // Constructor: inicializa el tableto vacío
     Conecta4() {
         tablero.resize(FILAS, vector<char>(COLUMNAS, VACIO));
         jugadorActual = JUGADOR1;
         fichasColocadas = 0;
     }
 
-    // Métodos a implementar
+    // Muestra tablero en consola
    void mostrarTablero() {
     cout << "\n  ";
     for (int col = 1; col <= COLUMNAS; col++) {
@@ -46,7 +46,40 @@ public:
         cout << "--";
     }
     cout << "-\n";
-};
+}
+
+// Verifica si una columna está llena
+bool columnaLlena(int columna) {
+    return tablero[0][columna] != VACIO;
+}
+
+//Coloca una ficha en la columna especificada
+bool colocarFicha(int columna) {
+    //Verifica que la columna sea válida
+    if (columna < 0 || columna >= COLUMNAS) {
+        return false;
+    }
+
+    //Verificar si la columna está llena
+    if (columnaLlena(columna)) {
+        return false;
+    }
+
+    //Buscar la fila más baja disponible.
+    for (int fila = FILAS - 1; fila >= 0; fila--) {
+        if (tablero[fila][columna] == VACIO) {
+            tablero[fila][columna] = jugadorActual;
+            fichasColocadas++;
+            return true;
+        }
+    }
+
+    return false;
+}
+
+void cambiarTurno() {
+    jugadorActual = (jugadorActual == JUGADOR1) ? JUGADOR2 : JUGADOR1;
+}
 
 int main() {
     cout << "Conecta 4" << endl;
@@ -54,5 +87,11 @@ int main() {
     Conecta4 juego;
     juego.mostrarTablero();
     
+    // Prueba de colocación
+    juego.colocarFicha(3);
+    juego.cambiarTurno();
+    juego.colocarFicha(3);
+    juego.mostrarTablero();
+
     return 0;
 }
