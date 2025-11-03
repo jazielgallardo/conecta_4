@@ -26,20 +26,33 @@ public:
     }
 
     // Métodos a implementar
-    void mostrarTablero() {
-        // TODO
+   void mostrarTablero() {
+    cout << "\n  ";
+    for (int col = 1; col <= COLUMNAS; col++) {
+        cout << col << " ";
     }
-
-    bool colocarFicha(int columna) {
-        // TODO
-        return false;
+    cout << "\n";
+    
+    for (int fila = 0; fila < FILAS; fila++) {
+        cout << "| ";
+        for (int col = 0; col < COLUMNAS; col++) {
+            cout << tablero[fila][col] << " ";
+        }
+        cout << "|\n";
     }
+    
+    cout << "  ";
+    for (int col = 0; col < COLUMNAS; col++) {
+        cout << "--";
+    }
+    cout << "-\n";
 };
 
 int main() {
-    cout << "Conecta 4 - En desarrollo" << endl;
+    cout << "Conecta 4" << endl;
     
     Conecta4 juego;
+    juego.mostrarTablero();
     
     return 0;
 }
