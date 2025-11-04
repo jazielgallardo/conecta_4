@@ -138,6 +138,7 @@ bool verificarDiagonalDescendente() {
     return false;
 }
 
+//Verifica si hay un ganador
 bool hayGanador() {
     return verificarHorizontal() || 
            verificarVertical() || 
@@ -145,6 +146,10 @@ bool hayGanador() {
            verificarDiagonalDescendente();
 }
 
+//Verifica si hay empate (tablero lleno)
+bool hayEmpate() {
+        return fichasColocadas == FILAS * COLUMNAS;
+    }
 
 //Cambia al siguiente jugador
 void cambiarTurno() {
@@ -165,6 +170,36 @@ int obtenerNumeroJugador() {
 void limpiarBuffer() {
     cin.clear();
     cin.ignore(numeric_limits<streamsize>::max(), '\n');
+}
+
+//Función para obtener una jugada válida del usuario
+int obtenerJugada(Conecta4& juego) {
+    int columna;
+    bool jugadaValida = false;
+
+    while (!jugadaValida) {
+        cout << "\nJugador " << juego.obtenerNumeroJugador() 
+             << " (" << juego.obtenerJugadorActual() << "), ";
+        cout << "ingrese el numero de columna (1-7): ";
+        
+        if (cin >> columna) {
+            columna--;
+            
+            if (columna < 0 || columna >= COLUMNAS) {
+                cout << "¡Error! Ingrese un numero entre 1 y 7.\n";
+            } else if (juego.columnaLlena(columna)) {
+                cout << "¡Error! La columna " << (columna + 1) 
+                     << " esta llena. Elija otra.\n";
+            } else {
+                jugadaValida = true;
+            }
+        } else {
+            cout << "¡Error! Entrada invalida. Ingrese un numero.\n";
+            limpiarBuffer();
+        }
+    }
+
+    return columna;
 }
 
 //Función principal
