@@ -47,173 +47,224 @@ public:
         cout << "--";
     }
     cout << "-\n";
-}
-
-// Verifica si una columna está llena
-bool columnaLlena(int columna) {
-    return tablero[0][columna] != VACIO;
-}
-
-//Coloca una ficha en la columna especificada
-bool colocarFicha(int columna) {
-    //Verifica que la columna sea válida
-    if (columna < 0 || columna >= COLUMNAS) {
-        return false;
     }
 
-    //Verificar si la columna está llena
-    if (columnaLlena(columna)) {
-        return false;
+    // Verifica si una columna está llena
+    bool columnaLlena(int columna) {
+        return tablero[0][columna] != VACIO;
     }
 
-    //Buscar la fila más baja disponible.
-    for (int fila = FILAS - 1; fila >= 0; fila--) {
-        if (tablero[fila][columna] == VACIO) {
-            tablero[fila][columna] = jugadorActual;
-            fichasColocadas++;
-            return true;
+    // oloca una ficha en la columna especificada
+    bool colocarFicha(int columna) {
+        // Verifica que la columna sea válida
+        if (columna < 0 || columna >= COLUMNAS) {
+            return false;
         }
-    }
 
-    return false;
-}
+        // Verificar si la columna está llena
+        if (columnaLlena(columna)) {
+            return false;
+        }
 
-//Verifica si hay 4 fichas consecutivas en horizontal
-bool verificarHorizontal() {
-    for (int fila = 0; fila < FILAS; fila++) {
-        for (int col = 0; col <= COLUMNAS - 4; col++) {
-            if (tablero[fila][col] != VACIO &&
-                tablero[fila][col] == tablero[fila][col + 1] &&
-                tablero[fila][col] == tablero[fila][col + 2] &&
-                tablero[fila][col] == tablero[fila][col + 3]) {
+        // Buscar la fila más baja disponible.
+        for (int fila = FILAS - 1; fila >= 0; fila--) {
+            if (tablero[fila][columna] == VACIO) {
+                tablero[fila][columna] = jugadorActual;
+                fichasColocadas++;
                 return true;
             }
         }
-    }
-    return false;
-}
 
-//Verficia si hay 4 fichas consecutivas en vertical
-bool verificarVertical() {
-    for (int col = 0; col < COLUMNAS; col++) {
+        return false;
+    }
+
+    // Verifica si hay 4 fichas consecutivas en horizontal
+    bool verificarHorizontal() {
+        for (int fila = 0; fila < FILAS; fila++) {
+            for (int col = 0; col <= COLUMNAS - 4; col++) {
+                if (tablero[fila][col] != VACIO &&
+                    tablero[fila][col] == tablero[fila][col + 1] &&
+                    tablero[fila][col] == tablero[fila][col + 2] &&
+                    tablero[fila][col] == tablero[fila][col + 3]) {
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
+
+    // Verficia si hay 4 fichas consecutivas en vertical
+    bool verificarVertical() {
+        for (int col = 0; col < COLUMNAS; col++) {
+            for (int fila = 0; fila <= FILAS - 4; fila++) {
+                if (tablero[fila][col] != VACIO &&
+                    tablero[fila][col] == tablero[fila + 1][col] &&
+                    tablero[fila][col] == tablero[fila + 2][col] &&
+                    tablero[fila][col] == tablero[fila + 3][col]) {
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
+
+    // Verifica diagonal ascendente
+    bool verificarDiagonalAscendente() {
+        for (int fila = 3; fila < FILAS; fila++) {
+            for (int col = 0; col <= COLUMNAS - 4; col++) {
+                if (tablero[fila][col] != VACIO &&
+                    tablero[fila][col] == tablero[fila - 1][col + 1] &&
+                    tablero[fila][col] == tablero[fila - 2][col + 2] &&
+                    tablero[fila][col] == tablero[fila - 3][col + 3]) {
+                    return true;
+                }
+            }
+        }
+    return false;
+    }
+
+    // Verifica diagonal descendente
+    bool verificarDiagonalDescendente() {
         for (int fila = 0; fila <= FILAS - 4; fila++) {
-            if (tablero[fila][col] != VACIO &&
-                tablero[fila][col] == tablero[fila + 1][col] &&
-                tablero[fila][col] == tablero[fila + 2][col] &&
-                tablero[fila][col] == tablero[fila + 3][col]) {
-                return true;
+            for (int col = 0; col <= COLUMNAS - 4; col++) {
+                if (tablero[fila][col] != VACIO &&
+                    tablero[fila][col] == tablero[fila + 1][col + 1] &&
+                    tablero[fila][col] == tablero[fila + 2][col + 2] &&
+                    tablero[fila][col] == tablero[fila + 3][col + 3]) {
+                    return true;
+                }
             }
         }
-    }
-    return false;
-}
-
-//Verifica diagonal ascendente
-bool verificarDiagonalAscendente() {
-    for (int fila = 3; fila < FILAS; fila++) {
-        for (int col = 0; col <= COLUMNAS - 4; col++) {
-            if (tablero[fila][col] != VACIO &&
-                tablero[fila][col] == tablero[fila - 1][col + 1] &&
-                tablero[fila][col] == tablero[fila - 2][col + 2] &&
-                tablero[fila][col] == tablero[fila - 3][col + 3]) {
-                return true;
-            }
-        }
-    }
-    return false;
-}
-
-//Verifica diagonal descendente
-bool verificarDiagonalDescendente() {
-    for (int fila = 0; fila <= FILAS - 4; fila++) {
-        for (int col = 0; col <= COLUMNAS - 4; col++) {
-            if (tablero[fila][col] != VACIO &&
-                tablero[fila][col] == tablero[fila + 1][col + 1] &&
-                tablero[fila][col] == tablero[fila + 2][col + 2] &&
-                tablero[fila][col] == tablero[fila + 3][col + 3]) {
-                return true;
-            }
-        }
-    }
-    return false;
-}
-
-//Verifica si hay un ganador
-bool hayGanador() {
-    return verificarHorizontal() || 
-           verificarVertical() || 
-           verificarDiagonalAscendente() || 
-           verificarDiagonalDescendente();
-}
-
-//Verifica si hay empate (tablero lleno)
-bool hayEmpate() {
-        return fichasColocadas == FILAS * COLUMNAS;
+        return false;
     }
 
-//Cambia al siguiente jugador
-void cambiarTurno() {
-    jugadorActual = (jugadorActual == JUGADOR1) ? JUGADOR2 : JUGADOR1;
+    // Verifica si hay un ganador
+    bool hayGanador() {
+        return verificarHorizontal() || 
+            verificarVertical() || 
+            verificarDiagonalAscendente() || 
+            verificarDiagonalDescendente();
+    }
+
+    // Verifica si hay empate (tablero lleno)
+    bool hayEmpate() {
+            return fichasColocadas == FILAS * COLUMNAS;
+    }
+
+    // Cambia al siguiente jugador
+    void cambiarTurno() {
+        jugadorActual = (jugadorActual == JUGADOR1) ? JUGADOR2 : JUGADOR1;
+    }
+
+    // Obtiene el jugador actual
+    char obtenerJugadorActual() {
+        return jugadorActual;
+    }
+
+    // Obtiene el número del jugador actual 1 o 2
+    int obtenerNumeroJugador() {
+        return (jugadorActual == JUGADOR1) ? 1 : 2;
+    }
+}
+    // Función para limpiar el buffer de entrada
+    void limpiarBuffer() {
+        cin.clear();
+        cin.ignore(numeric_limits<streamsize>::max(), '\n');
 }
 
-//Obtiene el jugador actual
-char obtenerJugadorActual() {
-    return jugadorActual;
-}
+    // Función para obtener una jugada válida del usuario
+    int obtenerJugada(Conecta4& juego) {
+        int columna;
+        bool jugadaValida = false;
 
-//Obtiene el número del jugador actual 1 o 2
-int obtenerNumeroJugador() {
-    return (jugadorActual == JUGADOR1) ? 1 : 2;
-}
-
-//Función para limpiar el buffer de entrada
-void limpiarBuffer() {
-    cin.clear();
-    cin.ignore(numeric_limits<streamsize>::max(), '\n');
-}
-
-//Función para obtener una jugada válida del usuario
-int obtenerJugada(Conecta4& juego) {
-    int columna;
-    bool jugadaValida = false;
-
-    while (!jugadaValida) {
-        cout << "\nJugador " << juego.obtenerNumeroJugador() 
-             << " (" << juego.obtenerJugadorActual() << "), ";
-        cout << "ingrese el numero de columna (1-7): ";
-        
-        if (cin >> columna) {
-            columna--;
+        while (!jugadaValida) {
+            cout << "\nJugador " << juego.obtenerNumeroJugador() 
+                << " (" << juego.obtenerJugadorActual() << "), ";
+            cout << "ingrese el numero de columna (1-7): ";
             
-            if (columna < 0 || columna >= COLUMNAS) {
-                cout << "¡Error! Ingrese un numero entre 1 y 7.\n";
-            } else if (juego.columnaLlena(columna)) {
-                cout << "¡Error! La columna " << (columna + 1) 
-                     << " esta llena. Elija otra.\n";
+            if (cin >> columna) {
+                columna--;
+                
+                if (columna < 0 || columna >= COLUMNAS) {
+                    cout << "¡Error! Ingrese un numero entre 1 y 7.\n";
+                } else if (juego.columnaLlena(columna)) {
+                    cout << "¡Error! La columna " << (columna + 1) 
+                        << " esta llena. Elija otra.\n";
+                } else {
+                    jugadaValida = true;
+                }
             } else {
-                jugadaValida = true;
+                cout << "¡Error! Entrada invalida. Ingrese un numero.\n";
+                limpiarBuffer();
             }
-        } else {
-            cout << "¡Error! Entrada invalida. Ingrese un numero.\n";
-            limpiarBuffer();
         }
-    }
 
-    return columna;
+        return columna;
 }
 
-//Función principal
-int main() {
-    cout << "Conecta 4" << endl;
-    
+// Función principal del jugo
+void jugarPartida() {
     Conecta4 juego;
+    bool juegoTerminado = false;
+
+    cout << "\n========================================\n";
+    cout << "       BIENVENIDO A CONECTA 4\n";
+    cout << "========================================\n";
+    cout << "\nJugador 1: X\n";
+    cout << "Jugador 2: O\n";
+    cout << "\nObjetivo: Conectar 4 fichas consecutivas\n";
+    cout << "(horizontal, vertical o diagonal)\n";
+
     juego.mostrarTablero();
-    
-    // Prueba de colocación
-    juego.colocarFicha(3);
-    juego.cambiarTurno();
-    juego.colocarFicha(3);
-    juego.mostrarTablero();
+
+    while (!juegoTerminado) {
+        // Obtener jugada del jugador actual
+        int columna = obtenerJugada(juego);
+
+        // Colocar la ficha
+        juego.colocarFicha(columna);
+
+        // Mostrar el tablero actualizado
+        juego.mostrarTablero();
+
+        // Verificar si hay ganador
+        if (juego.hayGanador()) {
+            cout << "\n╔════════════════════════════════════╗\n";
+            cout << "║  ¡FELICIDADES!                     ║\n";
+            cout << "║  Jugador " << juego.obtenerNumeroJugador() 
+                 << " (" << juego.obtenerJugadorActual() << ") ha ganado!      ║\n";
+            cout << "╚════════════════════════════════════╝\n";
+            juegoTerminado = true;
+        }
+        // Verificar si hay empate
+        else if (juego.hayEmpate()) {
+            cout << "\n╔════════════════════════════════════╗\n";
+            cout << "║  ¡EMPATE!                          ║\n";
+            cout << "║  El tablero esta lleno.            ║\n";
+            cout << "╚════════════════════════════════════╝\n";
+            juegoTerminado = true;
+        }
+        else {
+            // Cambiar de turno
+            juego.cambiarTurno();
+        }
+    }
+}
+
+// Función principal
+int main() {
+    char jugarOtraVez;
+
+    do {
+        jugarPartida();
+
+        cout << "\n¿Desean jugar otra partida? (s/n): ";
+        cin >> jugarOtraVez;
+        limpiarBuffer();
+
+    } while (jugarOtraVez == 's' || jugarOtraVez == 'S');
+
+    cout << "\n¡Gracias por jugar! Hasta pronto.\n\n";
 
     return 0;
 }
