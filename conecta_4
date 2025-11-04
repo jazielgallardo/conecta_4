@@ -77,6 +77,74 @@ bool colocarFicha(int columna) {
     return false;
 }
 
+//Verifica si hay 4 fichas consecutivas en horizontal
+bool verificarHorizontal() {
+    for (int fila = 0; fila < FILAS; fila++) {
+        for (int col = 0; col <= COLUMNAS - 4; col++) {
+            if (tablero[fila][col] != VACIO &&
+                tablero[fila][col] == tablero[fila][col + 1] &&
+                tablero[fila][col] == tablero[fila][col + 2] &&
+                tablero[fila][col] == tablero[fila][col + 3]) {
+                return true;
+            }
+        }
+    }
+    return false;
+}
+
+//Verficia si hay 4 fichas consecutivas en vertical
+bool verificarVertical() {
+    for (int col = 0; col < COLUMNAS; col++) {
+        for (int fila = 0; fila <= FILAS - 4; fila++) {
+            if (tablero[fila][col] != VACIO &&
+                tablero[fila][col] == tablero[fila + 1][col] &&
+                tablero[fila][col] == tablero[fila + 2][col] &&
+                tablero[fila][col] == tablero[fila + 3][col]) {
+                return true;
+            }
+        }
+    }
+    return false;
+}
+
+//Verifica diagonal ascendente
+bool verificarDiagonalAscendente() {
+    for (int fila = 3; fila < FILAS; fila++) {
+        for (int col = 0; col <= COLUMNAS - 4; col++) {
+            if (tablero[fila][col] != VACIO &&
+                tablero[fila][col] == tablero[fila - 1][col + 1] &&
+                tablero[fila][col] == tablero[fila - 2][col + 2] &&
+                tablero[fila][col] == tablero[fila - 3][col + 3]) {
+                return true;
+            }
+        }
+    }
+    return false;
+}
+
+//Verifica diagonal descendente
+bool verificarDiagonalDescendente() {
+    for (int fila = 0; fila <= FILAS - 4; fila++) {
+        for (int col = 0; col <= COLUMNAS - 4; col++) {
+            if (tablero[fila][col] != VACIO &&
+                tablero[fila][col] == tablero[fila + 1][col + 1] &&
+                tablero[fila][col] == tablero[fila + 2][col + 2] &&
+                tablero[fila][col] == tablero[fila + 3][col + 3]) {
+                return true;
+            }
+        }
+    }
+    return false;
+}
+
+bool hayGanador() {
+    return verificarHorizontal() || 
+           verificarVertical() || 
+           verificarDiagonalAscendente() || 
+           verificarDiagonalDescendente();
+}
+
+
 void cambiarTurno() {
     jugadorActual = (jugadorActual == JUGADOR1) ? JUGADOR2 : JUGADOR1;
 }
