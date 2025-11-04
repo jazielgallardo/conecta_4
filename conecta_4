@@ -1,5 +1,6 @@
 #include <iostream>
 #include <vector>
+#include <limits>
 
 using namespace std;
 
@@ -145,10 +146,22 @@ bool hayGanador() {
 }
 
 
+//Cambia al siguiente jugador
 void cambiarTurno() {
     jugadorActual = (jugadorActual == JUGADOR1) ? JUGADOR2 : JUGADOR1;
 }
 
+//Obtiene el jugador actual
+char obtenerJugadorActual() {
+    return jugadorActual;
+}
+
+//Obtiene el número del jugador actual 1 o 2
+int obtenerNumeroJugador() {
+    return (jugadorActual == JUGADOR1) ? 1 : 2;
+}
+
+//Función principal
 int main() {
     cout << "Conecta 4" << endl;
     
