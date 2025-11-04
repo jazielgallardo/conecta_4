@@ -165,7 +165,8 @@ public:
     int obtenerNumeroJugador() {
         return (jugadorActual == JUGADOR1) ? 1 : 2;
     }
-}
+};
+
     // Función para limpiar el buffer de entrada
     void limpiarBuffer() {
         cin.clear();
